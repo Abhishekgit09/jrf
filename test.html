@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .test-result {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Component Loading Test</h1>
+        
+        <div id="headerTest" class="test-result">
+            Testing header component... <span id="headerStatus">Loading</span>
+        </div>
+        
+        <div id="footerTest" class="test-result">
+            Testing footer component... <span id="footerStatus">Loading</span>
+        </div>
+        
+        <p>If components load successfully, this page will indicate success. Otherwise, check the browser console for errors.</p>
+        
+        <a href="index.html" class="btn" style="display: inline-block; margin-top: 20px;">Return to main page</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Testing component loading...');
+            
+            // Test header loading
+            fetch('components/header.html')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('headerStatus').textContent = 'Success!';
+                    document.getElementById('headerTest').classList.add('success');
+                })
+                .catch(error => {
+                    document.getElementById('headerStatus').textContent = `Failed: ${error.message}`;
+                    document.getElementById('headerTest').classList.add('error');
+                    console.error('Header loading error:', error);
+                });
+                
+            // Test footer loading
+            fetch('components/footer.html')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('footerStatus').textContent = 'Success!';
+                    document.getElementById('footerTest').classList.add('success');
+                })
+                .catch(error => {
+                    document.getElementById('footerStatus').textContent = `Failed: ${error.message}`;
+                    document.getElementById('footerTest').classList.add('error');
+                    console.error('Footer loading error:', error);
+                });
+        });
+    </script>
+</body>
+</html> 
